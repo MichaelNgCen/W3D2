@@ -17,7 +17,7 @@ class Game
 
     def play
         while !won?
-
+            
         end 
     end
 end
