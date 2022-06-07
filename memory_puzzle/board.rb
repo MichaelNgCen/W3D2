@@ -42,25 +42,37 @@ class Board
         end
 
         shuffled = cards.shuffle
-
-        (0...@grid.length).each do |i|
-            @grid.each do |row|
-                row[i] = shuffled.pop
+        
+        
+        (0...@grid.length).each do |idx|
+            @grid.each_with_index do |row, idx_2|
+                @grid[idx][idx_2] = shuffled.pop
             end
         end
 
         @grid
     end
 
-    # def self.render
-    #     @grid.each do |row|
-    #         puts row.join(" ")
-    #     end
-    # end
+    def self.render
+        @grid.each do |row|
+            puts row.join(" ")
+        end
+    end
 
-    # def won? 
-    #     @grid.all? do |row|
-    #         row.any? { |ele| ele.up_down == false}
-    #     end
-    # end
+    def won? 
+        @grid.all? do |row|
+            row.any? { |ele| ele.up_down == false}
+        end
+    end
+
+    def reveal(guessed_pos)
+        row, col = guessed_pos
+
+        card = @grid[row][col]
+
+        if !card.up_down
+            card.reveal
+            return card.face_value
+        end
+    end
 end
